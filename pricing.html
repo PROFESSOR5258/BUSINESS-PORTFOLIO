@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing | Automate Minds</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --background: hsl(0, 0%, 100%);
+            --foreground: hsl(222.2, 47.4%, 11.2%);
+            --muted: hsl(210, 40%, 96.1%);
+            --muted-foreground: hsl(215.4, 16.3%, 46.9%);
+            --card: hsl(0, 0%, 100%);
+            --card-foreground: hsl(222.2, 47.4%, 11.2%);
+            --border: hsl(214.3, 31.8%, 91.4%);
+            --primary: hsl(222.2, 47.4%, 11.2%);
+            --primary-foreground: hsl(210, 40%, 98%);
+            --accent-color: hsl(195, 100%, 50%);
+            --gradient-1: hsl(195, 100%, 50%);
+            --gradient-2: hsl(280, 90%, 65%);
+        }
+
+        body.dark {
+            --background: hsl(224, 71%, 4%);
+            --foreground: hsl(213, 31%, 91%);
+            --muted: hsl(223, 47%, 11%);
+            --muted-foreground: hsl(215.4, 16.3%, 56.9%);
+            --card: hsl(224, 71%, 4%);
+            --card-foreground: hsl(213, 31%, 91%);
+            --border: hsl(216, 34%, 17%);
+            --primary: hsl(210, 40%, 98%);
+            --primary-foreground: hsl(222.2, 47.4%, 1.2%);
+            --accent-color: hsl(195, 100%, 50%);
+            --gradient-1: hsl(195, 100%, 50%);
+            --gradient-2: hsl(280, 90%, 65%);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--background);
+            color: var(--foreground);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background 0.4s ease, color 0.4s ease;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(var(--background-rgb, 10, 10, 15), 0.95);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 1.2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Archivo', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--foreground);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .page-hero {
+            padding: 180px 3rem 100px;
+            text-align: center;
+            background: var(--card);
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(99, 102, 241, 0.1) 0%, transparent 60%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .page-hero h1 {
+            font-family: 'Archivo', sans-serif;
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-hero p {
+            font-size: 1.3rem;
+            color: var(--muted-foreground);
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .pricing-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 100px 3rem;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 100px;
+        }
+
+        .pricing-card {
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: 24px;
+            padding: 3rem;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .pricing-card.featured {
+            border-color: var(--accent-color);
+            transform: scale(1.05);
+            box-shadow: 0 30px 80px rgba(99, 102, 241, 0.2);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.15);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -15px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .pricing-header {
+            text-align: center;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+
+        .plan-name {
+            font-family: 'Archivo', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-description {
+            color: var(--muted-foreground);
+            font-size: 0.95rem;
+        }
+
+        .price {
+            font-family: 'Archivo', sans-serif;
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin: 1.5rem 0;
+        }
+
+        .price-period {
+            font-size: 1.2rem;
+            color: var(--muted-foreground);
+            font-weight: 600;
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 2rem 0;
+        }
+
+        .features-list li {
+            padding: 0.8rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .features-list li::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 0.2rem;
+        }
+
+        .cta-button {
+            width: 100%;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            color: white;
+            padding: 1.2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+        }
+
+        .secondary-button {
+            width: 100%;
+            background: var(--muted);
+            color: var(--foreground);
+            padding: 1.2rem;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+
+        .secondary-button:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .comparison-section {
+            background: var(--card);
+            border-top: 1px solid var(--border);
+            padding: 100px 3rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Archivo', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+
+        .comparison-table {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .table-header {
+            background: var(--muted);
+            font-weight: 700;
+        }
+
+        .table-cell {
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .table-cell:first-child {
+            justify-content: flex-start;
+            font-weight: 600;
+        }
+
+        .check-icon {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .faq-section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 100px 3rem;
+        }
+
+        .faq-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: var(--accent-color);
+        }
+
+        .faq-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            padding: 0 2rem;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 2rem 2rem;
+        }
+
+        .faq-answer p {
+            color: var(--muted-foreground);
+            line-height: 1.7;
+        }
+
+        footer {
+            background: var(--background);
+            border-top: 1px solid var(--border);
+            padding: 3rem;
+            text-align: center;
+            color: var(--muted-foreground);
+        }
+
+        @media (max-width: 768px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+
+            .table-row {
+                grid-template-columns: 1fr;
+            }
+
+            .table-cell {
+                justify-content: flex-start;
+                padding: 1rem;
+            }
+
+            .page-hero {
+                padding: 140px 1.5rem 80px;
+            }
+
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="dark">
+    <header>
+        <nav>
+            <a href="automate-minds-pro.html" class="logo">Automate Minds</a>
+            <ul class="nav-links">
+                <li><a href="automate-minds-pro.html#home">Home</a></li>
+                <li><a href="automate-minds-pro.html#services">Services</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-hero">
+        <h1>Transparent <span class="gradient-text">Pricing</span></h1>
+        <p>Choose the perfect plan for your automation needs. No hidden fees, no surprises.</p>
+    </section>
+
+    <section class="pricing-section">
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <div class="pricing-header">
+                    <h3 class="plan-name">Starter</h3>
+                    <p class="plan-description">Perfect for small businesses testing automation</p>
+                    <div class="price">50,000</div>
+                    <div class="price-period">One-time project fee</div>
+                </div>
+
+                <ul class="features-list">
+                    <li>Single workflow automation</li>
+                    <li>Up to 3 API integrations</li>
+                    <li>Basic error handling</li>
+                    <li>2 weeks delivery</li>
+                    <li>30 days support</li>
+                    <li>Documentation included</li>
+                    <li>Email support</li>
+                </ul>
+
+                <a href="contact.html" class="secondary-button">Get Started</a>
+            </div>
+
+            <div class="pricing-card featured">
+                <div class="popular-badge">Most Popular</div>
+                <div class="pricing-header">
+                    <h3 class="plan-name">Professional</h3>
+                    <p class="plan-description">Ideal for growing businesses ready to scale</p>
+                    <div class="price">75,000</div>
+                    <div class="price-period">Per project</div>
+                </div>
+
+                <ul class="features-list">
+                    <li>3-5 workflow automations</li>
+                    <li>Up to 10 API integrations</li>
+                    <li>Advanced AI features</li>
+                    <li>Production-grade deployment</li>
+                    <li>4 weeks delivery</li>
+                    <li>90 days support</li>
+                    <li>Priority support</li>
+                    <li>Custom analytics dashboard</li>
+                </ul>
+
+                <a href="contact.html" class="cta-button">Get Started</a>
+            </div>
+
+            <div class="pricing-card">
+                <div class="pricing-header">
+                    <h3 class="plan-name">Enterprise</h3>
+                    <p class="plan-description">For large organizations with complex needs</p>
+                    <div class="price">Custom</div>
+                    <div class="price-period">Tailored to your needs</div>
+                </div>
+
+                <ul class="features-list">
+                    <li>Unlimited workflows</li>
+                    <li>Unlimited integrations</li>
+                    <li>Advanced AI & ML features</li>
+                    <li>Enterprise security</li>
+                    <li>Dedicated project manager</li>
+                    <li>1 year support included</li>
+                    <li>24/7 priority support</li>
+                    <li>Custom SLA agreements</li>
+                    <li>On-site training</li>
+                </ul>
+
+                <a href="contact.html" class="secondary-button">Contact Sales</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="comparison-section">
+        <div class="section-header">
+            <h2>Feature <span class="gradient-text">Comparison</span></h2>
+            <p style="color: var(--muted-foreground); font-size: 1.2rem;">Choose the plan that best fits your automation requirements</p>
+        </div>
+
+        <div class="comparison-table">
+            <div class="table-row table-header">
+                <div class="table-cell">Feature</div>
+                <div class="table-cell">Starter</div>
+                <div class="table-cell">Professional</div>
+                <div class="table-cell">Enterprise</div>
+            </div>
+
+            <div class="table-row">
+                <div class="table-cell">Workflow Automations</div>
+                <div class="table-cell">1</div>
+                <div class="table-cell">3-5</div>
+                <div class="table-cell">Unlimited</div>
+            </div>
+
+            <div class="table-row">
+                <div class="table-cell">API Integrations</div>
+                <div class="table-cell">3</div>
+                <div class="table-cell">10</div>
+                <div class="table-cell">Unlimited</div>
+            </div>
+
+            <div class="table-row">
+                <div class="table-cell">AI Features (GPT-4)</div>
+                <div class="table-cell">-</div>
+                <div class="table-cell"><span class="check-icon">✓</span></div>
+                <div class="table-cell"><span class="check-icon">✓</span></div>
+            </div>
+
+            <div class="table-row">
+                <div class="table-cell">LangChain Integration</div>
+                <div class="table-cell">-</div>
+                <div class="table-cell"><span class="check-icon">✓</span></div>
+                <div class="table-cell"><span class="check-icon">✓</span></div>
+            </div>
+
+            <div class="table-row">
+                <div class="table-cell">Custom Analytics Dashboard</div>
+                <div class="table-cell">-</div>
+                <div class="table-cell"><span class="check-icon">✓</span></div>
+                <div class="table-cell"><span class="check-icon">✓</span></div>
+            </div>
+
+            <div class="table-row">
+                <div class="table-cell">Error Handling & Monitoring</div>
+                <div class="table-cell">Basic</div>
+                <div class="table-cell">Advanced</div>
+                <div class="table-cell">Enterprise</div>
+            </div>
+
+            <div class="table-row">
+                <div class="table-cell">Support Duration</div>
+                <div class="table-cell">30 days</div>
+                <div class="table-cell">90 days</div>
+                <div class="table-cell">1 year</div>
+            </div>
+
+            <div class="table-row">
+                <div class="table-cell">24/7 Support</div>
+                <div class="table-cell">-</div>
+                <div class="table-cell">-</div>
+                <div class="table-cell"><span class="check-icon">✓</span></div>
+            </div>
+
+            <div class="table-row">
+                <div class="table-cell">Dedicated Project Manager</div>
+                <div class="table-cell">-</div>
+                <div class="table-cell">-</div>
+                <div class="table-cell"><span class="check-icon">✓</span></div>
+            </div>
+
+            <div class="table-row">
+                <div class="table-cell">On-site Training</div>
+                <div class="table-cell">-</div>
+                <div class="table-cell">-</div>
+                <div class="table-cell"><span class="check-icon">✓</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <div class="section-header">
+            <h2>Pricing <span class="gradient-text">Questions</span></h2>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>What's included in the project fee?</span>
+                <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                <p>The project fee covers complete development, testing, deployment, documentation, and training. You'll receive a production-ready automation system with full source code access, comprehensive documentation, and the specified support period.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Are there any recurring costs?</span>
+                <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                <p>There are no mandatory recurring fees from us. However, you may have costs from third-party services like OpenAI API, n8n cloud hosting, or other integrated platforms. We'll provide a detailed breakdown of all potential ongoing costs during consultation.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Can I upgrade my plan later?</span>
+                <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                <p>Absolutely! Many clients start with Starter and upgrade as they see results. We'll credit your initial investment toward the upgrade cost, making it easy to scale your automation capabilities as your business grows.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>What happens after the support period ends?</span>
+                <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                <p>Your automation continues working independently. You can opt for extended support packages (starting at $500/month) or reach out for specific updates on a project basis. Many clients operate their automations successfully without ongoing support.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Do you offer payment plans?</span>
+                <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                <p>Yes! For Professional and Enterprise plans, we offer flexible payment schedules: 50% upfront, 25% at midpoint milestone, and 25% upon completion. Custom payment arrangements are available for Enterprise clients.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>What's the typical ROI timeline?</span>
+                <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                <p>Most clients achieve positive ROI within 3-6 months. Our automations typically save 60-95% of manual processing time, which translates to immediate labor cost savings and increased capacity for revenue-generating activities.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content" style="max-width: 1600px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem;">
+            <div>
+                <div style="font-family: 'Archivo', sans-serif; font-size: 1.8rem; font-weight: 900; background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem;">Automate Minds</div>
+                <p style="color: var(--muted-foreground); line-height: 1.7; margin-bottom: 2rem;">
+                    AI automation agency building intelligent workflows that transform 
+                    business operations and drive exponential growth.
+                </p>
+                <div style="display: flex; gap: 1rem;">
+                    <a href="https://linkedin.com/in/prath9763" target="_blank" style="width: 40px; height: 40px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--foreground); text-decoration: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                    <a href="https://github.com/PROFESSOR5258" target="_blank" style="width: 40px; height: 40px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--foreground); text-decoration: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                        </svg>
+                    </a>
+                    <a href="mailto:yashlohar5258@gmail.com" style="width: 40px; height: 40px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--foreground); text-decoration: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                    </a>
+                    <a href="https://professor5258.github.io/PERSONAL-PORTFOLIO/" target="_blank" style="width: 40px; height: 40px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--foreground); text-decoration: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div>
+                <h4 style="font-family: 'Archivo', sans-serif; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px;">Services</h4>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 0.8rem;"><a href="automate-minds-pro.html#services" style="color: var(--muted-foreground); text-decoration: none;">Workflow Automation</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="automate-minds-pro.html#services" style="color: var(--muted-foreground); text-decoration: none;">Lead Generation</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="automate-minds-pro.html#services" style="color: var(--muted-foreground); text-decoration: none;">AI Recruitment</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="automate-minds-pro.html#services" style="color: var(--muted-foreground); text-decoration: none;">API Integration</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="font-family: 'Archivo', sans-serif; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px;">Company</h4>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 0.8rem;"><a href="about.html" style="color: var(--muted-foreground); text-decoration: none;">About Us</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="case-studies.html" style="color: var(--muted-foreground); text-decoration: none;">Case Studies</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="pricing.html" style="color: var(--muted-foreground); text-decoration: none;">Pricing</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="testimonials.html" style="color: var(--muted-foreground); text-decoration: none;">Testimonials</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="contact.html" style="color: var(--muted-foreground); text-decoration: none;">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="font-family: 'Archivo', sans-serif; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px;">Resources</h4>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 0.8rem;"><a href="https://github.com/PROFESSOR5258/PERSONAL-PORTFOLIO/blob/main/Prathmesh_Lohar_AI_Automation_Engineer_n8n.pdf" target="_blank" style="color: var(--muted-foreground); text-decoration: none;">Resume</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="https://github.com/PROFESSOR5258" target="_blank" style="color: var(--muted-foreground); text-decoration: none;">GitHub Projects</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="contact.html" style="color: var(--muted-foreground); text-decoration: none;">Support</a></li>
+                </ul>
+            </div>
+        </div>
+        <div style="max-width: 1600px; margin: 0 auto; padding-top: 2rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; color: var(--muted-foreground); font-size: 0.9rem;">
+            <div>© 2025 Automate Minds. All rights reserved.</div>
+            <div>Built by Prathmesh Lohar</div>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.faq-item').forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                document.querySelectorAll('.faq-item').forEach(i => {
+                    i.classList.remove('active');
+                });
+                
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

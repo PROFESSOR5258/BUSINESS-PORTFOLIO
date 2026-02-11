@@ -1,0 +1,2015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automate Minds | AI Automation Agency</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Theme Variables - Light Mode */
+        :root {
+            --background: hsl(0, 0%, 100%);
+            --foreground: hsl(222.2, 47.4%, 11.2%);
+            --muted: hsl(210, 40%, 96.1%);
+            --muted-foreground: hsl(215.4, 16.3%, 46.9%);
+            --card: hsl(0, 0%, 100%);
+            --card-foreground: hsl(222.2, 47.4%, 11.2%);
+            --border: hsl(214.3, 31.8%, 91.4%);
+            --primary: hsl(222.2, 47.4%, 11.2%);
+            --primary-foreground: hsl(210, 40%, 98%);
+            --accent-color: hsl(195, 100%, 50%);
+            --gradient-1: hsl(195, 100%, 50%);
+            --gradient-2: hsl(280, 90%, 65%);
+        }
+
+        /* Dark Mode */
+        body.dark {
+            --background: hsl(224, 71%, 4%);
+            --foreground: hsl(213, 31%, 91%);
+            --muted: hsl(223, 47%, 11%);
+            --muted-foreground: hsl(215.4, 16.3%, 56.9%);
+            --card: hsl(224, 71%, 4%);
+            --card-foreground: hsl(213, 31%, 91%);
+            --border: hsl(216, 34%, 17%);
+            --primary: hsl(210, 40%, 98%);
+            --primary-foreground: hsl(222.2, 47.4%, 1.2%);
+            --accent-color: hsl(195, 100%, 50%);
+            --gradient-1: hsl(195, 100%, 50%);
+            --gradient-2: hsl(280, 90%, 65%);
+        }
+
+        /* Retro Mode */
+        body.retro {
+            --background: hsl(39, 70%, 90%);
+            --foreground: hsl(20, 80%, 20%);
+            --muted: hsl(30, 40%, 85%);
+            --muted-foreground: hsl(20, 40%, 30%);
+            --card: hsl(39, 60%, 85%);
+            --card-foreground: hsl(20, 80%, 20%);
+            --border: hsl(20, 40%, 70%);
+            --primary: hsl(20, 80%, 50%);
+            --primary-foreground: hsl(39, 100%, 97%);
+            --accent-color: hsl(20, 80%, 50%);
+            --gradient-1: hsl(20, 80%, 50%);
+            --gradient-2: hsl(39, 80%, 60%);
+        }
+
+        /* Cyberpunk Mode */
+        body.cyberpunk {
+            --background: hsl(235, 85%, 8%);
+            --foreground: hsl(180, 100%, 75%);
+            --muted: hsl(235, 70%, 15%);
+            --muted-foreground: hsl(180, 70%, 55%);
+            --card: hsl(235, 80%, 12%);
+            --card-foreground: hsl(180, 100%, 75%);
+            --border: hsl(326, 100%, 60%);
+            --primary: hsl(326, 100%, 60%);
+            --primary-foreground: hsl(235, 100%, 98%);
+            --accent-color: hsl(326, 100%, 60%);
+            --gradient-1: hsl(326, 100%, 60%);
+            --gradient-2: hsl(196, 100%, 60%);
+        }
+
+        /* Aurora Mode */
+        body.aurora {
+            --background: hsl(220, 40%, 10%);
+            --foreground: hsl(160, 100%, 90%);
+            --muted: hsl(220, 30%, 20%);
+            --muted-foreground: hsl(160, 70%, 70%);
+            --card: hsl(220, 35%, 15%);
+            --card-foreground: hsl(160, 100%, 90%);
+            --border: hsl(280, 80%, 60%);
+            --primary: hsl(160, 100%, 50%);
+            --primary-foreground: hsl(220, 40%, 10%);
+            --accent-color: hsl(160, 100%, 50%);
+            --gradient-1: hsl(160, 100%, 50%);
+            --gradient-2: hsl(280, 80%, 60%);
+        }
+
+        /* Synthwave Mode */
+        body.synthwave {
+            --background: hsl(260, 15%, 10%);
+            --foreground: hsl(330, 100%, 90%);
+            --muted: hsl(260, 20%, 20%);
+            --muted-foreground: hsl(330, 70%, 70%);
+            --card: hsl(260, 15%, 15%);
+            --card-foreground: hsl(330, 100%, 90%);
+            --border: hsl(300, 100%, 60%);
+            --primary: hsl(300, 100%, 60%);
+            --primary-foreground: hsl(260, 15%, 10%);
+            --accent-color: hsl(300, 100%, 60%);
+            --gradient-1: hsl(300, 100%, 60%);
+            --gradient-2: hsl(190, 100%, 60%);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--background);
+            color: var(--foreground);
+            overflow-x: hidden;
+            transition: background 0.4s ease, color 0.4s ease;
+            line-height: 1.6;
+        }
+
+        /* n8n Workflow Animated Background */
+        #workflow-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.15;
+        }
+
+        .workflow-node {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            animation: float-node linear infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .workflow-connector {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gradient-1), var(--gradient-2));
+            transform-origin: left center;
+            animation: pulse-line 3s ease-in-out infinite;
+        }
+
+        @keyframes float-node {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(50px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes pulse-line {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(var(--background-rgb, 10, 10, 15), 0.85);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        header.scrolled {
+            background: rgba(var(--background-rgb, 10, 10, 15), 0.95);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 1.2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Archivo', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            border-radius: 2px;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.7; }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--foreground);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        /* Theme Switcher */
+        .theme-switcher {
+            position: relative;
+        }
+
+        .theme-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .theme-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .theme-dropdown {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 0.5rem;
+            min-width: 180px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .theme-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .theme-option {
+            padding: 0.7rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-size: 0.9rem;
+        }
+
+        .theme-option:hover {
+            background: var(--muted);
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.3px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 150px 3rem 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(99, 102, 241, 0.15) 0%, transparent 60%);
+            animation: rotate-gradient 20s linear infinite;
+        }
+
+        @keyframes rotate-gradient {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.2rem;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            border-radius: 50%;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        .hero h1 {
+            font-family: 'Archivo', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-description {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            color: var(--muted-foreground);
+            margin-bottom: 3rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 0.8s ease 0.4s both;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+
+        .secondary-button {
+            padding: 0.8rem 1.8rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.3px;
+            transition: all 0.3s ease;
+            background: var(--card);
+            color: var(--foreground);
+            border: 2px solid var(--border);
+        }
+
+        .secondary-button:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 100px 3rem;
+            background: var(--card);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
+
+        .stats-container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-radius: 16px;
+            background: var(--background);
+            border: 1px solid var(--border);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .stat-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+
+        .stat-number {
+            font-family: 'Archivo', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+        }
+
+        .stat-label {
+            color: var(--muted-foreground);
+            font-size: 1.05rem;
+            font-weight: 600;
+        }
+
+        /* Section Header */
+        .section {
+            padding: 120px 3rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.2rem;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-title {
+            font-family: 'Archivo', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1.5px;
+        }
+
+        .section-title .gradient-text {
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-description {
+            color: var(--muted-foreground);
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .service-card {
+            background: var(--card);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .service-card:hover::before {
+            opacity: 0.05;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.15);
+            border-color: var(--accent-color);
+        }
+
+        .service-icon-wrapper {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-icon {
+            width: 36px;
+            height: 36px;
+            stroke: white;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .service-card h3 {
+            font-family: 'Archivo', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -0.5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-card p {
+            color: var(--muted-foreground);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-features {
+            list-style: none;
+            padding: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-features li {
+            padding: 0.7rem 0;
+            color: var(--muted-foreground);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-weight: 500;
+        }
+
+        .service-features li::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Projects Grid */
+        .projects {
+            background: var(--card);
+            border-top: 1px solid var(--border);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 3rem;
+        }
+
+        .project-card {
+            background: var(--background);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.2);
+            border-color: var(--accent-color);
+        }
+
+        .project-header {
+            padding: 3rem 3rem 2rem;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(139, 92, 246, 0.08));
+            position: relative;
+        }
+
+        .project-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-header h3 {
+            font-family: 'Archivo', sans-serif;
+            font-size: 1.7rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+            letter-spacing: -0.5px;
+        }
+
+        .project-body {
+            padding: 2rem 3rem 3rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-description {
+            color: var(--muted-foreground);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+            flex-grow: 1;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            margin-bottom: 2rem;
+        }
+
+        .tech-tag {
+            background: var(--muted);
+            color: var(--foreground);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .project-impact {
+            background: var(--card);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+
+        .project-impact strong {
+            color: var(--foreground);
+            font-weight: 700;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: gap 0.3s ease;
+        }
+
+        .project-link:hover {
+            gap: 1.2rem;
+        }
+
+        /* About Section */
+        .about {
+            background: var(--background);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-family: 'Archivo', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            letter-spacing: -1px;
+        }
+
+        .about-text h2 .gradient-text {
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .about-text p {
+            color: var(--muted-foreground);
+            margin-bottom: 1.5rem;
+            font-size: 1.15rem;
+            line-height: 1.8;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .about-stat {
+            background: var(--card);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .about-stat-number {
+            font-family: 'Archivo', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .about-stat-label {
+            color: var(--muted-foreground);
+            font-weight: 600;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .skill-category {
+            background: var(--card);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .skill-category h4 {
+            font-family: 'Archivo', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--foreground);
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+        }
+
+        .skill-tag {
+            background: var(--muted);
+            color: var(--foreground);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid var(--border);
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--card);
+            border-top: 1px solid var(--border);
+        }
+
+        .contact-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .contact-form {
+            background: var(--background);
+            padding: 4rem;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.7rem;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--foreground);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1rem 1.3rem;
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            color: var(--foreground);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .submit-button {
+            width: 100%;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            color: white;
+            padding: 1.2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.3px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .submit-button:hover::before {
+            left: 100%;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--background);
+            border-top: 1px solid var(--border);
+            padding: 4rem 3rem 3rem;
+        }
+
+        .footer-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand {
+            font-family: 'Archivo', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .footer-description {
+            color: var(--muted-foreground);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--foreground);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .footer-column h4 {
+            font-family: 'Archivo', sans-serif;
+            font-size: 1rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: var(--foreground);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--muted-foreground);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-bottom {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--muted-foreground);
+            font-size: 0.9rem;
+        }
+
+        /* Scroll to top */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+            color: white;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 120px 1.5rem 80px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .section {
+                padding: 80px 1.5rem;
+            }
+
+            .services-grid,
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .contact-form {
+                padding: 2rem;
+            }
+        }
+
+        /* Page-specific styles */
+        .page-hero {
+            padding: 180px 3rem 100px;
+            text-align: center;
+            background: var(--card);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .page-hero h1 {
+            font-family: 'Archivo', sans-serif;
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+        }
+
+        .page-hero .gradient-text {
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 3rem;
+        }
+
+        /* Utility classes */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body class="dark">
+    <!-- n8n Workflow Animated Background -->
+    <div id="workflow-background"></div>
+
+    <!-- Header -->
+    <header id="header">
+        <nav>
+            <div class="logo">Automate Minds</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <div class="theme-switcher">
+                    <button class="theme-button" id="themeButton">🌙</button>
+                    <div class="theme-dropdown" id="themeDropdown">
+                        <div class="theme-option" data-theme="light">☀️ Light</div>
+                        <div class="theme-option" data-theme="dark">🌙 Dark</div>
+                        <div class="theme-option" data-theme="retro">🕹️ Retro</div>
+                        <div class="theme-option" data-theme="cyberpunk">🤖 Cyberpunk</div>
+                        <div class="theme-option" data-theme="aurora">🌌 Aurora</div>
+                        <div class="theme-option" data-theme="synthwave">🎵 Synthwave</div>
+                    </div>
+                </div>
+                <a href="#contact" class="cta-button">Get Started</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-badge">
+                AI-Powered Business Automation
+            </div>
+            <h1>
+                Build Intelligent <span class="gradient-text">Automation</span><br>
+                That Scales Your Business
+            </h1>
+            <p class="hero-description">
+                We design and deploy production-ready AI workflows that eliminate manual processes, 
+                reduce operational costs, and drive measurable business outcomes through intelligent automation.
+            </p>
+            <div class="hero-buttons">
+                <a href="#services" class="cta-button">Explore Services</a>
+                <a href="#projects" class="secondary-button">View Case Studies</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg class="service-icon" viewBox="0 0 24 24" stroke="white">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <span class="stat-number" data-target="100">0</span>
+                    <div class="stat-label">Leads Generated Daily</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg class="service-icon" viewBox="0 0 24 24" stroke="white">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                        </svg>
+                    </div>
+                    <span class="stat-number" data-target="10">0</span>
+                    <div class="stat-label">Production Workflows</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg class="service-icon" viewBox="0 0 24 24" stroke="white">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </div>
+                    <span class="stat-number" data-target="95">0</span>
+                    <div class="stat-label">Time Saved</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg class="service-icon" viewBox="0 0 24 24" stroke="white">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                        </svg>
+                    </div>
+                    <span class="stat-number" data-target="10">0</span>
+                    <div class="stat-label">API Integrations</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="section" id="services">
+        <div class="section-header">
+            <div class="section-badge">Our Services</div>
+            <h2 class="section-title">
+                Comprehensive <span class="gradient-text">AI Automation</span> Solutions
+            </h2>
+            <p class="section-description">
+                End-to-end automation services designed to transform your business operations 
+                and accelerate growth through intelligent process automation.
+            </p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon-wrapper">
+                    <svg class="service-icon" viewBox="0 0 24 24">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                    </svg>
+                </div>
+                <h3>AI Workflow Automation</h3>
+                <p>Design and deploy intelligent n8n workflows that automate complex business processes with zero manual intervention.</p>
+                <ul class="service-features">
+                    <li>Custom n8n workflow architecture</li>
+                    <li>API integrations & webhooks</li>
+                    <li>Real-time error handling</li>
+                    <li>Production-grade deployment</li>
+                </ul>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon-wrapper">
+                    <svg class="service-icon" viewBox="0 0 24 24">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                </div>
+                <h3>Lead Generation Systems</h3>
+                <p>Automated lead generation pipelines that identify, qualify, and engage prospects at scale with intelligent outreach.</p>
+                <ul class="service-features">
+                    <li>Web scraping & data extraction</li>
+                    <li>Email validation & enrichment</li>
+                    <li>Automated outreach campaigns</li>
+                    <li>CRM synchronization</li>
+                </ul>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon-wrapper">
+                    <svg class="service-icon" viewBox="0 0 24 24">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                </div>
+                <h3>AI-Powered Recruitment</h3>
+                <p>Intelligent resume screening and candidate evaluation systems that transform your hiring process.</p>
+                <ul class="service-features">
+                    <li>Automated resume parsing</li>
+                    <li>AI candidate scoring</li>
+                    <li>Skill matching & ranking</li>
+                    <li>Interview automation</li>
+                </ul>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon-wrapper">
+                    <svg class="service-icon" viewBox="0 0 24 24">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                </div>
+                <h3>Client Onboarding Automation</h3>
+                <p>Streamline client onboarding with personalized, AI-generated communications and automated workflows.</p>
+                <ul class="service-features">
+                    <li>Automated welcome sequences</li>
+                    <li>Personalized email generation</li>
+                    <li>Document processing</li>
+                    <li>Real-time data sync</li>
+                </ul>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon-wrapper">
+                    <svg class="service-icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                </div>
+                <h3>Custom API Integrations</h3>
+                <p>Connect your business tools with seamless API integrations and intelligent data pipelines.</p>
+                <ul class="service-features">
+                    <li>REST API development</li>
+                    <li>OAuth authentication</li>
+                    <li>Third-party integrations</li>
+                    <li>Data orchestration</li>
+                </ul>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon-wrapper">
+                    <svg class="service-icon" viewBox="0 0 24 24">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                    </svg>
+                </div>
+                <h3>AI Agent Development</h3>
+                <p>Build sophisticated AI agents powered by GPT-4, LangChain, and advanced prompt engineering.</p>
+                <ul class="service-features">
+                    <li>Custom GPT-4 applications</li>
+                    <li>LangChain integration</li>
+                    <li>Prompt engineering</li>
+                    <li>Agentic workflows</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="section projects" id="projects">
+        <div class="section-header">
+            <div class="section-badge">Case Studies</div>
+            <h2 class="section-title">
+                Featured <span class="gradient-text">Automation</span> Projects
+            </h2>
+            <p class="section-description">
+                Real-world automation solutions delivering measurable business impact 
+                across industries and use cases.
+            </p>
+        </div>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-icon">
+                        <svg class="service-icon" viewBox="0 0 24 24" stroke="white">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                    </div>
+                    <h3>Intelligent Lead Generation System</h3>
+                </div>
+                <div class="project-body">
+                    <p class="project-description">
+                        End-to-end lead generation workflow processing 100+ qualified leads daily with automated 
+                        outreach, intelligent email extraction, web scraping, and comprehensive data validation.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">n8n</span>
+                        <span class="tech-tag">Apify API</span>
+                        <span class="tech-tag">OpenAI</span>
+                        <span class="tech-tag">LangChain</span>
+                        <span class="tech-tag">Gmail API</span>
+                        <span class="tech-tag">Google Sheets</span>
+                    </div>
+                    <div class="project-impact">
+                        <strong>Business Impact:</strong> Reduced manual lead generation effort by 95% while 
+                        improving lead quality by 40% and increasing pipeline throughput by 300%.
+                    </div>
+                    <a href="https://github.com/PROFESSOR5258/Intelligent-Lead-Generation-Automation-System-with-n8n" target="_blank" class="project-link">
+                        View on GitHub
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-icon">
+                        <svg class="service-icon" viewBox="0 0 24 24" stroke="white">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                    </div>
+                    <h3>AI-Powered Resume Analysis System</h3>
+                </div>
+                <div class="project-body">
+                    <p class="project-description">
+                        Automated recruitment pipeline that processes PDF resumes from Gmail attachments, 
+                        generates structured candidate evaluations, and assigns AI-powered relevance scores.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">n8n</span>
+                        <span class="tech-tag">GPT-4</span>
+                        <span class="tech-tag">LangChain</span>
+                        <span class="tech-tag">Google Drive</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">PDF Processing</span>
+                    </div>
+                    <div class="project-impact">
+                        <strong>Business Impact:</strong> Reduced resume screening time by 85% and improved 
+                        evaluation consistency through standardized AI-powered candidate assessment.
+                    </div>
+                    <a href="https://github.com/PROFESSOR5258/AI-Resume-Analyzer-Evaluation-System" target="_blank" class="project-link">
+                        View on GitHub
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-icon">
+                        <svg class="service-icon" viewBox="0 0 24 24" stroke="white">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                    </div>
+                    <h3>Client Onboarding Automation System</h3>
+                </div>
+                <div class="project-body">
+                    <p class="project-description">
+                        Automated client onboarding workflow with dual AI agent system for personalized 
+                        communications and structured profile generation for 100+ clients monthly.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">n8n</span>
+                        <span class="tech-tag">GPT-4</span>
+                        <span class="tech-tag">Gmail API</span>
+                        <span class="tech-tag">Google Sheets</span>
+                        <span class="tech-tag">Webhooks</span>
+                        <span class="tech-tag">JSON</span>
+                    </div>
+                    <div class="project-impact">
+                        <strong>Business Impact:</strong> Reduced onboarding time from 45 minutes to 2 minutes 
+                        per client while maintaining 98% personalization quality score.
+                    </div>
+                    <a href="https://github.com/PROFESSOR5258/Client-Onboarding-Automation-System-n8n-" target="_blank" class="project-link">
+                        View on GitHub
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about" id="about">
+        <div class="section-header">
+            <div class="section-badge">About Us</div>
+            <h2 class="section-title">
+                Transforming Businesses Through <span class="gradient-text">Intelligent Automation</span>
+            </h2>
+        </div>
+        <div class="about-content">
+            <div class="about-text">
+                <p>
+                    Automate Minds is a cutting-edge AI automation agency specializing in building 
+                    production-ready workflows that eliminate manual processes and drive exponential 
+                    business growth.
+                </p>
+                <p>
+                    Founded and led by <strong>Prathmesh Lohar</strong>, an AI Automation Engineer with 
+                    extensive experience in n8n workflows, API integrations, and AI-assisted business 
+                    automation, we focus on delivering reliable, measurable results that transform operations.
+                </p>
+                <p>
+                    Our expertise spans lead generation automation, recruitment systems, client onboarding, 
+                    and custom API integrations—all powered by cutting-edge AI technology including GPT-4, 
+                    LangChain, and intelligent process automation frameworks.
+                </p>
+                <div class="about-stats">
+                    <div class="about-stat">
+                        <span class="about-stat-number">8.52</span>
+                        <div class="about-stat-label">CGPA in AI & Data Science</div>
+                    </div>
+                    <div class="about-stat">
+                        <span class="about-stat-number">10+</span>
+                        <div class="about-stat-label">Clients Automated</div>
+                    </div>
+                </div>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h4>Automation & AI</h4>
+                    <div class="skill-list">
+                        <span class="skill-tag">n8n Workflows</span>
+                        <span class="skill-tag">OpenAI GPT-4</span>
+                        <span class="skill-tag">LangChain</span>
+                        <span class="skill-tag">Agentic AI</span>
+                        <span class="skill-tag">Prompt Engineering</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h4>Integration & APIs</h4>
+                    <div class="skill-list">
+                        <span class="skill-tag">REST APIs</span>
+                        <span class="skill-tag">Webhooks</span>
+                        <span class="skill-tag">Gmail API</span>
+                        <span class="skill-tag">Google Sheets</span>
+                        <span class="skill-tag">OAuth</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h4>Development</h4>
+                    <div class="skill-list">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">Django</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Git</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h4>Cloud & Data</h4>
+                    <div class="skill-list">
+                        <span class="skill-tag">Google Cloud</span>
+                        <span class="skill-tag">MySQL</span>
+                        <span class="skill-tag">Data Pipelines</span>
+                        <span class="skill-tag">ETL</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact" id="contact">
+        <div class="contact-container">
+            <div class="section-header">
+                <div class="section-badge">Get In Touch</div>
+                <h2 class="section-title">
+                    Let's <span class="gradient-text">Automate</span> Your Business
+                </h2>
+                <p class="section-description">
+                    Ready to transform your operations with AI automation? Schedule a consultation 
+                    and discover how we can help scale your business.
+                </p>
+            </div>
+            <!-- <form class="contact-form" id="contactForm"> -->
+            <form class="contact-form" action="https://n8n.agnic.cloud/webhook/portfolio-form-data-email" method="POST">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="company">Company</label>
+                        <input type="text" id="company" name="company">
+                    </div>
+                    <div class="form-group">
+                        <label for="service">Service Interest</label>
+                        <select id="service" name="service">
+                            <option value="">Select a service</option>
+                            <option value="workflow">AI Workflow Automation</option>
+                            <option value="leads">Lead Generation</option>
+                            <option value="recruitment">AI Recruitment</option>
+                            <option value="onboarding">Client Onboarding</option>
+                            <option value="api">API Integration</option>
+                            <option value="ai-agent">AI Agent Development</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="message">Tell us about your automation needs</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit" class="submit-button">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div>
+                <div class="footer-brand">Automate Minds</div>
+                <p class="footer-description">
+                    AI automation agency building intelligent workflows that transform 
+                    business operations and drive exponential growth.
+                </p>
+                <div class="social-links">
+                    <a href="https://linkedin.com/in/prath9763" target="_blank" class="social-link">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                    <a href="https://github.com/PROFESSOR5258" target="_blank" class="social-link">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                        </svg>
+                    </a>
+                    <a href="mailto:yashlohar5258@gmail.com" class="social-link">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                    </a>
+                    <a href="https://professor5258.github.io/PERSONAL-PORTFOLIO/" target="_blank" class="social-link">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Services</h4>
+                <ul class="footer-links">
+                    <li><a href="#services">Workflow Automation</a></li>
+                    <li><a href="#services">Lead Generation</a></li>
+                    <li><a href="#services">AI Recruitment</a></li>
+                    <li><a href="#services">API Integration</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Company</h4>
+                <ul class="footer-links">
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="case-studies.html">Case Studies</a></li>
+                    <li><a href="pricing.html">Pricing</a></li>
+                    <li><a href="testimonials.html">Testimonials</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Resources</h4>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/PROFESSOR5258/PERSONAL-PORTFOLIO/blob/main/Prathmesh_Lohar_AI_Automation_Engineer_n8n.pdf" target="_blank">Resume</a></li>
+                    <li><a href="https://github.com/PROFESSOR5258" target="_blank">GitHub Projects</a></li>
+                    <li><a href="contact.html">Support</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>© 2025 Automate Minds. All rights reserved.</div>
+            <div>Built by Prathmesh Lohar</div>
+        </div>
+    </footer>
+
+    <!-- Scroll to top -->
+    <div class="scroll-top" onclick="scrollToTop()">↑</div>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Theme Management
+        const themeButton = document.getElementById('themeButton');
+        const themeDropdown = document.getElementById('themeDropdown');
+        const themeOptions = document.querySelectorAll('.theme-option');
+
+        const themeIcons = {
+            light: '☀️',
+            dark: '🌙',
+            retro: '🕹️',
+            cyberpunk: '🤖',
+            aurora: '🌌',
+            synthwave: '🎵'
+        };
+
+        themeButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            themeDropdown.classList.toggle('active');
+        });
+
+        document.addEventListener('click', () => {
+            themeDropdown.classList.remove('active');
+        });
+
+        themeOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const theme = option.dataset.theme;
+                setTheme(theme);
+            });
+        });
+
+        function setTheme(theme) {
+            document.body.className = theme;
+            themeButton.textContent = themeIcons[theme];
+            localStorage.setItem('theme', theme);
+            themeDropdown.classList.remove('active');
+        }
+
+        // Load saved theme
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.body.className = savedTheme;
+            themeButton.textContent = themeIcons[savedTheme];
+        });
+
+        // n8n Workflow Background Animation
+        function createWorkflowBackground() {
+            const container = document.getElementById('workflow-background');
+            const nodeLabels = ['API', 'AI', 'DB', 'HTTP', 'n8n', 'GPT', 'Mail', 'Data', 'Code', 'Hook'];
+            
+            for (let i = 0; i < 8; i++) {
+                const node = document.createElement('div');
+                node.className = 'workflow-node';
+                node.textContent = nodeLabels[Math.floor(Math.random() * nodeLabels.length)];
+                node.style.left = Math.random() * 100 + '%';
+                node.style.animationDuration = (15 + Math.random() * 10) + 's';
+                node.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(node);
+            }
+        }
+
+        createWorkflowBackground();
+
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll to top button
+        const scrollTopBtn = document.querySelector('.scroll-top');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Counter Animation for Stats
+        function animateCounter(element, target, duration = 2000) {
+            const start = 0;
+            const startTime = performance.now();
+            
+            let suffix = '+';
+            const originalText = element.textContent.trim();
+            
+            if (originalText.includes('%')) {
+                suffix = '%';
+            } else if (originalText.includes('+')) {
+                suffix = '+';
+            }
+
+            function updateCounter(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+                const current = Math.floor(easeOutQuart * target);
+                
+                element.textContent = current + suffix;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    element.textContent = target + suffix;
+                }
+            }
+            
+            requestAnimationFrame(updateCounter);
+        }
+
+        // Observe stats section
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const statCards = entry.target.querySelectorAll('.stat-card');
+                    
+                    statCards.forEach((card, index) => {
+                        const statNumber = card.querySelector('.stat-number');
+                        const target = parseInt(statNumber.dataset.target);
+                        
+                        setTimeout(() => {
+                            animateCounter(statNumber, target);
+                        }, index * 100);
+                    });
+                    
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        const statsSection = document.querySelector('.stats');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+
+        // // Form submission
+        // document.getElementById('contactForm').addEventListener('submit', function(e) {
+        //     e.preventDefault();
+            
+        //     const formData = new FormData(this);
+        //     const data = Object.fromEntries(formData);
+            
+        //     alert('Thank you for your message! We will get back to you within 24 hours.');
+        //     this.reset();
+            
+        //     console.log('Form submitted:', data);
+        // });
+    </script>
+</body>
+</html>

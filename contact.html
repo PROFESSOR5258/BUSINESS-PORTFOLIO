@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Automate Minds</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --background: hsl(0, 0%, 100%);
+            --foreground: hsl(222.2, 47.4%, 11.2%);
+            --muted: hsl(210, 40%, 96.1%);
+            --muted-foreground: hsl(215.4, 16.3%, 46.9%);
+            --card: hsl(0, 0%, 100%);
+            --card-foreground: hsl(222.2, 47.4%, 11.2%);
+            --border: hsl(214.3, 31.8%, 91.4%);
+            --primary: hsl(222.2, 47.4%, 11.2%);
+            --primary-foreground: hsl(210, 40%, 98%);
+            --accent-color: hsl(195, 100%, 50%);
+            --gradient-1: hsl(195, 100%, 50%);
+            --gradient-2: hsl(280, 90%, 65%);
+        }
+
+        body.dark {
+            --background: hsl(224, 71%, 4%);
+            --foreground: hsl(213, 31%, 91%);
+            --muted: hsl(223, 47%, 11%);
+            --muted-foreground: hsl(215.4, 16.3%, 56.9%);
+            --card: hsl(224, 71%, 4%);
+            --card-foreground: hsl(213, 31%, 91%);
+            --border: hsl(216, 34%, 17%);
+            --primary: hsl(210, 40%, 98%);
+            --primary-foreground: hsl(222.2, 47.4%, 1.2%);
+            --accent-color: hsl(195, 100%, 50%);
+            --gradient-1: hsl(195, 100%, 50%);
+            --gradient-2: hsl(280, 90%, 65%);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--background);
+            color: var(--foreground);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background 0.4s ease, color 0.4s ease;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(var(--background-rgb, 10, 10, 15), 0.95);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 1.2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Archivo', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--foreground);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .page-hero {
+            padding: 180px 3rem 100px;
+            text-align: center;
+            background: var(--card);
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(99, 102, 241, 0.1) 0%, transparent 60%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .page-hero h1 {
+            font-family: 'Archivo', sans-serif;
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-hero p {
+            font-size: 1.3rem;
+            color: var(--muted-foreground);
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 100px 3rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 100px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        .contact-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 3rem;
+            transition: all 0.4s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            border-color: var(--accent-color);
+        }
+
+        .contact-card-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-card h3 {
+            font-family: 'Archivo', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .contact-card p {
+            color: var(--muted-foreground);
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        .contact-detail {
+            font-weight: 600;
+            color: var(--accent-color);
+            font-size: 1.1rem;
+        }
+
+        .contact-form-container {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 4rem;
+        }
+
+        .form-header {
+            margin-bottom: 3rem;
+        }
+
+        .form-header h2 {
+            font-family: 'Archivo', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+
+        .form-header p {
+            color: var(--muted-foreground);
+            font-size: 1.1rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.7rem;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1rem 1.3rem;
+            background: var(--muted);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            color: var(--foreground);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            background: var(--card);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .submit-button {
+            width: 100%;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            color: white;
+            padding: 1.3rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+        }
+
+        .faq-section {
+            background: var(--card);
+            border-top: 1px solid var(--border);
+            padding: 100px 3rem;
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Archivo', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--muted-foreground);
+            font-size: 1.2rem;
+        }
+
+        .faq-item {
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: var(--accent-color);
+        }
+
+        .faq-question {
+            padding: 2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: var(--accent-color);
+        }
+
+        .faq-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            padding: 0 2rem;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 2rem 2rem;
+        }
+
+        .faq-answer p {
+            color: var(--muted-foreground);
+            line-height: 1.7;
+        }
+
+        .response-time {
+            background: var(--muted);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .response-time h3 {
+            font-family: 'Archivo', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+
+        .response-time-number {
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        footer {
+            background: var(--background);
+            border-top: 1px solid var(--border);
+            padding: 3rem;
+            text-align: center;
+            color: var(--muted-foreground);
+        }
+
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-form-container {
+                padding: 2rem;
+            }
+
+            .page-hero {
+                padding: 140px 1.5rem 80px;
+            }
+
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="dark">
+    <header>
+        <nav>
+            <a href="automate-minds-pro.html" class="logo">Automate Minds</a>
+            <ul class="nav-links">
+                <li><a href="automate-minds-pro.html#home">Home</a></li>
+                <li><a href="automate-minds-pro.html#services">Services</a></li>
+                <li><a href="automate-minds-pro.html#projects">Projects</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-hero">
+        <h1>Let's <span class="gradient-text">Transform</span> Your Business</h1>
+        <p>Get in touch with our team to discuss how AI automation can revolutionize your operations</p>
+    </section>
+
+    <section class="contact-section">
+        <div class="contact-grid">
+            <div class="contact-info">
+                <div class="contact-card">
+                    <div class="contact-card-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                    </div>
+                    <h3>Email Us</h3>
+                    <p>Send us an email and we'll get back to you within 24 hours</p>
+                    <div class="contact-detail"><a href="mailto:yashlohar5258@gmail.com">yashlohar5258@gmail.com</a></div>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-card-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                    </div>
+                    <h3>Call Us</h3>
+                    <p>Speak directly with our automation experts</p>
+                    <div class="contact-detail">+91 9763821790</div>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-card-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                    </div>
+                    <h3>Visit Us</h3>
+                    <p>Located in the heart of India's tech hub</p>
+                    <div class="contact-detail">Satara, Maharashtra, India</div>
+                </div>
+            </div>
+
+            <div class="contact-form-container">
+                <div class="form-header">
+                    <h2>Send us a <span class="gradient-text">Message</span></h2>
+                    <p>Fill out the form below and we'll respond within 24 hours</p>
+                </div>
+
+                <!-- <form id="contactForm"> -->
+                <form class="contact-form" action="https://n8n.agnic.cloud/webhook/portfolio-form-data-email" method="POST">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="company">Company Name</label>
+                            <input type="text" id="company" name="company">
+                        </div>
+                        <div class="form-group">
+                            <label for="service">Service Interest</label>
+                            <select id="service" name="service" required>
+                                <option value="">Select a service</option>
+                                <option value="consulting">Automation Consulting</option>
+                                <option value="workflow">AI Workflow Automation</option>
+                                <option value="leads">Lead Generation Systems</option>
+                                <option value="recruitment">AI-Powered Recruitment</option>
+                                <option value="onboarding">Client Onboarding</option>
+                                <option value="api">Custom API Integrations</option>
+                                <option value="ai-agent">AI Agent Development</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="budget">Estimated Budget</label>
+                        <select id="budget" name="budget">
+                            <option value="">Select budget range</option>
+                            <option value="under-5k">Under 5,000</option>
+                            <option value="5k-10k">5,000 - 10,000</option>
+                            <option value="10k-25k">10,000 - 25,000</option>
+                            <option value="25k-50k">25,000 - 50,000</option>
+                            <option value="over-50k">Over 50,000</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Project Description</label>
+                        <textarea id="message" name="message" required placeholder="Tell us about your automation needs, challenges, and goals..."></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-button">Send Message</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="response-time">
+            <h3>Average Response Time</h3>
+            <div class="response-time-number">< 24h</div>
+            <p style="color: var(--muted-foreground); margin-top: 1rem;">We pride ourselves on quick and thorough responses to all inquiries</p>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <div class="faq-container">
+            <div class="section-header">
+                <h2><span class="gradient-text">Frequently</span> Asked Questions</h2>
+                <p>Everything you need to know about working with Automate Minds</p>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>What is the typical timeline for an automation project?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Most automation projects are completed within 2-6 weeks, depending on complexity. Simple workflow automations can be deployed in as little as 1-2 weeks, while complex AI-powered systems with multiple integrations may take 4-6 weeks. We provide a detailed timeline during our initial consultation.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Do you provide ongoing support after deployment?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! We offer comprehensive maintenance and support packages that include monitoring, updates, bug fixes, and optimization. Our support plans range from basic monthly check-ins to 24/7 enterprise support with guaranteed response times.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>What platforms and tools do you work with?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>We specialize in n8n workflow automation, OpenAI GPT-4, LangChain, and can integrate with virtually any API-enabled platform including Gmail, Google Sheets, Slack, Airtable, HubSpot, Salesforce, and hundreds of other business tools. If it has an API, we can automate it.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How do you ensure data security and privacy?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>We implement industry-standard security practices including encrypted data transmission, secure API authentication (OAuth 2.0), role-based access controls, and compliance with GDPR and other data protection regulations. All automations are tested thoroughly before deployment.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Can you integrate with our existing systems?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Absolutely! One of our core strengths is seamlessly integrating automation workflows with your existing tech stack. We work with CRMs, ERPs, databases, cloud platforms, and custom applications. If your system has an API or webhook capability, we can connect to it.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>What kind of ROI can I expect from automation?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Our clients typically see 60-95% reduction in manual processing time, which translates to significant cost savings and productivity gains. For example, our lead generation systems process 100+ leads daily that would require multiple full-time employees manually. Most projects achieve positive ROI within 3-6 months.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content" style="max-width: 1600px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem;">
+            <div>
+                <div style="font-family: 'Archivo', sans-serif; font-size: 1.8rem; font-weight: 900; background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem;">Automate Minds</div>
+                <p style="color: var(--muted-foreground); line-height: 1.7; margin-bottom: 2rem;">
+                    AI automation agency building intelligent workflows that transform 
+                    business operations and drive exponential growth.
+                </p>
+                <div style="display: flex; gap: 1rem;">
+                    <a href="https://linkedin.com/in/prath9763" target="_blank" style="width: 40px; height: 40px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--foreground); text-decoration: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                    <a href="https://github.com/PROFESSOR5258" target="_blank" style="width: 40px; height: 40px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--foreground); text-decoration: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                        </svg>
+                    </a>
+                    <a href="mailto:yashlohar5258@gmail.com" style="width: 40px; height: 40px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--foreground); text-decoration: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                    </a>
+                    <a href="https://professor5258.github.io/PERSONAL-PORTFOLIO/" target="_blank" style="width: 40px; height: 40px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--foreground); text-decoration: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div>
+                <h4 style="font-family: 'Archivo', sans-serif; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px;">Services</h4>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 0.8rem;"><a href="automate-minds-pro.html#services" style="color: var(--muted-foreground); text-decoration: none;">Workflow Automation</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="automate-minds-pro.html#services" style="color: var(--muted-foreground); text-decoration: none;">Lead Generation</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="automate-minds-pro.html#services" style="color: var(--muted-foreground); text-decoration: none;">AI Recruitment</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="automate-minds-pro.html#services" style="color: var(--muted-foreground); text-decoration: none;">API Integration</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="font-family: 'Archivo', sans-serif; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px;">Company</h4>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 0.8rem;"><a href="about.html" style="color: var(--muted-foreground); text-decoration: none;">About Us</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="case-studies.html" style="color: var(--muted-foreground); text-decoration: none;">Case Studies</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="pricing.html" style="color: var(--muted-foreground); text-decoration: none;">Pricing</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="testimonials.html" style="color: var(--muted-foreground); text-decoration: none;">Testimonials</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="contact.html" style="color: var(--muted-foreground); text-decoration: none;">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="font-family: 'Archivo', sans-serif; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px;">Resources</h4>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 0.8rem;"><a href="https://github.com/PROFESSOR5258/PERSONAL-PORTFOLIO/blob/main/Prathmesh_Lohar_AI_Automation_Engineer_n8n.pdf" target="_blank" style="color: var(--muted-foreground); text-decoration: none;">Resume</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="https://github.com/PROFESSOR5258" target="_blank" style="color: var(--muted-foreground); text-decoration: none;">GitHub Projects</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="contact.html" style="color: var(--muted-foreground); text-decoration: none;">Support</a></li>
+                </ul>
+            </div>
+        </div>
+        <div style="max-width: 1600px; margin: 0 auto; padding-top: 2rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; color: var(--muted-foreground); font-size: 0.9rem;">
+            <div>© 2025 Automate Minds. All rights reserved.</div>
+            <div>Built by Prathmesh Lohar</div>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // FAQ Accordion
+        document.querySelectorAll('.faq-item').forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                document.querySelectorAll('.faq-item').forEach(i => {
+                    i.classList.remove('active');
+                });
+                
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Form submission
+        // document.getElementById('contactForm').addEventListener('submit', function(e) {
+        //     e.preventDefault();
+            
+        //     const formData = new FormData(this);
+        //     const data = Object.fromEntries(formData);
+
+        </script>
+
+
+</body>
+</html>

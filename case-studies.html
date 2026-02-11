@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Studies | Automate Minds</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --background: hsl(0, 0%, 100%);
+            --foreground: hsl(222.2, 47.4%, 11.2%);
+            --muted: hsl(210, 40%, 96.1%);
+            --muted-foreground: hsl(215.4, 16.3%, 46.9%);
+            --card: hsl(0, 0%, 100%);
+            --card-foreground: hsl(222.2, 47.4%, 11.2%);
+            --border: hsl(214.3, 31.8%, 91.4%);
+            --primary: hsl(222.2, 47.4%, 11.2%);
+            --primary-foreground: hsl(210, 40%, 98%);
+            --accent-color: hsl(195, 100%, 50%);
+            --gradient-1: hsl(195, 100%, 50%);
+            --gradient-2: hsl(280, 90%, 65%);
+        }
+
+        body.dark {
+            --background: hsl(224, 71%, 4%);
+            --foreground: hsl(213, 31%, 91%);
+            --muted: hsl(223, 47%, 11%);
+            --muted-foreground: hsl(215.4, 16.3%, 56.9%);
+            --card: hsl(224, 71%, 4%);
+            --card-foreground: hsl(213, 31%, 91%);
+            --border: hsl(216, 34%, 17%);
+            --primary: hsl(210, 40%, 98%);
+            --primary-foreground: hsl(222.2, 47.4%, 1.2%);
+            --accent-color: hsl(195, 100%, 50%);
+            --gradient-1: hsl(195, 100%, 50%);
+            --gradient-2: hsl(280, 90%, 65%);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--background);
+            color: var(--foreground);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background 0.4s ease, color 0.4s ease;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(var(--background-rgb, 10, 10, 15), 0.95);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 1.2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Archivo', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--foreground);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .page-hero {
+            padding: 180px 3rem 100px;
+            text-align: center;
+            background: var(--card);
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(99, 102, 241, 0.1) 0%, transparent 60%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .page-hero h1 {
+            font-family: 'Archivo', sans-serif;
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-hero p {
+            font-size: 1.3rem;
+            color: var(--muted-foreground);
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .case-study {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 3rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .case-study:nth-child(even) {
+            background: var(--card);
+        }
+
+        .case-header {
+            margin-bottom: 4rem;
+        }
+
+        .case-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .case-header h2 {
+            font-family: 'Archivo', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        .case-meta {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .meta-label {
+            color: var(--muted-foreground);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .meta-value {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .case-overview {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--muted-foreground);
+            margin-bottom: 4rem;
+        }
+
+        .challenge-solution {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .section-block {
+            background: var(--muted);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .section-block h3 {
+            font-family: 'Archivo', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section-block ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .section-block li {
+            padding: 0.8rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+
+        .section-block li::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            margin-top: 0.6rem;
+            flex-shrink: 0;
+        }
+
+        .tech-implementation {
+            background: var(--card);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            margin-bottom: 4rem;
+        }
+
+        .tech-implementation h3 {
+            font-family: 'Archivo', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+        }
+
+        .tech-stack-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .tech-tag {
+            background: var(--muted);
+            color: var(--foreground);
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .architecture-diagram {
+            background: var(--muted);
+            padding: 3rem;
+            border-radius: 12px;
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 2;
+            color: var(--muted-foreground);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .result-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 2.5rem;
+            border-radius: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .result-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            border-color: var(--accent-color);
+        }
+
+        .result-number {
+            font-family: 'Archivo', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-label {
+            color: var(--muted-foreground);
+            font-weight: 600;
+        }
+
+        .testimonial-box {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+
+        .testimonial-text {
+            font-size: 1.2rem;
+            font-style: italic;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: white;
+        }
+
+        .author-info h4 {
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+
+        .author-info p {
+            color: var(--muted-foreground);
+            font-size: 0.95rem;
+        }
+
+        .cta-section {
+            background: var(--card);
+            border-top: 1px solid var(--border);
+            padding: 100px 3rem;
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-content h2 {
+            font-family: 'Archivo', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-content p {
+            font-size: 1.2rem;
+            color: var(--muted-foreground);
+            margin-bottom: 3rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            color: white;
+            padding: 1.2rem 3rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 50px rgba(99, 102, 241, 0.4);
+        }
+
+        footer {
+            background: var(--background);
+            border-top: 1px solid var(--border);
+            padding: 3rem;
+            text-align: center;
+            color: var(--muted-foreground);
+        }
+
+        @media (max-width: 768px) {
+            .challenge-solution {
+                grid-template-columns: 1fr;
+            }
+
+            .page-hero {
+                padding: 140px 1.5rem 80px;
+            }
+
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .case-meta {
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="dark">
+    <header>
+        <nav>
+            <a href="automate-minds-pro.html" class="logo">Automate Minds</a>
+            <ul class="nav-links">
+                <li><a href="automate-minds-pro.html#home">Home</a></li>
+                <li><a href="automate-minds-pro.html#services">Services</a></li>
+                <li><a href="case-studies.html">Case Studies</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-hero">
+        <h1>Real-World <span class="gradient-text">Success</span> Stories</h1>
+        <p>In-depth case studies showcasing how we've helped businesses achieve measurable results through intelligent automation</p>
+    </section>
+
+    <!-- Case Study 1: Lead Generation -->
+    <section class="case-study">
+        <div class="case-header">
+            <div class="case-badge">Lead Generation</div>
+            <h2>Intelligent Lead Generation & <span class="gradient-text">Automation System</span></h2>
+            <div class="case-meta">
+                <div class="meta-item">
+                    <div class="meta-label">Industry</div>
+                    <div class="meta-value">B2B SaaS</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Timeline</div>
+                    <div class="meta-value">3 Weeks</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Team Size</div>
+                    <div class="meta-value">1 Engineer</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Status</div>
+                    <div class="meta-value">Production</div>
+                </div>
+            </div>
+        </div>
+
+        <p class="case-overview">
+            A rapidly growing B2B SaaS company was struggling with manual lead generation processes that were time-consuming, 
+            inconsistent, and limited their ability to scale. Their sales team was spending 60% of their time on lead research 
+            and initial outreach, leaving little time for actual selling.
+        </p>
+
+        <div class="challenge-solution">
+            <div class="section-block">
+                <h3>
+                    <div class="section-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                    </div>
+                    The Challenge
+                </h3>
+                <ul>
+                    <li>Manual lead research consuming 20+ hours weekly per sales rep</li>
+                    <li>Inconsistent data quality and incomplete lead information</li>
+                    <li>High cost per lead ($50-75) limiting growth</li>
+                    <li>Slow response times to new leads (24-48 hours)</li>
+                    <li>No systematic approach to lead qualification</li>
+                    <li>Difficulty tracking lead sources and attribution</li>
+                </ul>
+            </div>
+
+            <div class="section-block">
+                <h3>
+                    <div class="section-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    Our Solution
+                </h3>
+                <ul>
+                    <li>Automated Google Places web scraping for targeted businesses</li>
+                    <li>AI-powered email extraction using GPT-3.5 and LangChain</li>
+                    <li>Intelligent lead scoring and qualification system</li>
+                    <li>Automated personalized email outreach campaigns</li>
+                    <li>Real-time CRM synchronization via API integrations</li>
+                    <li>Comprehensive analytics dashboard with Google Sheets</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="tech-implementation">
+            <h3>Technical Implementation</h3>
+            <div class="tech-stack-list">
+                <span class="tech-tag">n8n</span>
+                <span class="tech-tag">Apify API</span>
+                <span class="tech-tag">OpenAI GPT-3.5</span>
+                <span class="tech-tag">LangChain</span>
+                <span class="tech-tag">Gmail API</span>
+                <span class="tech-tag">Google Sheets API</span>
+                <span class="tech-tag">Webhooks</span>
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">Python</span>
+            </div>
+
+            <div class="architecture-diagram">
+                Trigger (Schedule/Webhook) → Apify Google Places Crawler →<br>
+                Data Extraction → OpenAI Email Finder → LangChain Validation →<br>
+                Lead Scoring Algorithm → Gmail API (Automated Outreach) →<br>
+                Google Sheets CRM → Analytics Dashboard
+            </div>
+        </div>
+
+        <div class="results-grid">
+            <div class="result-card">
+                <div class="result-number">100+</div>
+                <div class="result-label">Qualified Leads Daily</div>
+            </div>
+            <div class="result-card">
+                <div class="result-number">95%</div>
+                <div class="result-label">Time Reduction</div>
+            </div>
+            <div class="result-card">
+                <div class="result-number">$8</div>
+                <div class="result-label">Cost Per Lead</div>
+            </div>
+            <div class="result-card">
+                <div class="result-number">5x</div>
+                <div class="result-label">Pipeline Growth</div>
+            </div>
+        </div>
+
+        <div class="testimonial-box">
+            <p class="testimonial-text">
+                "This automation transformed our entire sales operation. We went from manually processing 20 leads 
+                per week to automatically qualifying and engaging 100+ leads daily. The system pays for itself 
+                multiple times over every single month."
+            </p>
+            <div class="testimonial-author">
+                <div class="author-avatar">SK</div>
+                <div class="author-info">
+                    <h4>Sarah Kim</h4>
+                    <p>VP of Sales, TechVenture Inc</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Study 2: AI Recruitment -->
+    <section class="case-study">
+        <div class="case-header">
+            <div class="case-badge">AI Recruitment</div>
+            <h2>AI-Powered Resume Analysis & <span class="gradient-text">Candidate Evaluation</span></h2>
+            <div class="case-meta">
+                <div class="meta-item">
+                    <div class="meta-label">Industry</div>
+                    <div class="meta-value">HR Technology</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Timeline</div>
+                    <div class="meta-value">4 Weeks</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Team Size</div>
+                    <div class="meta-value">2 Engineers</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Status</div>
+                    <div class="meta-value">Production</div>
+                </div>
+            </div>
+        </div>
+
+        <p class="case-overview">
+            A growing enterprise was receiving 300+ resumes weekly but their HR team could only thoroughly review 
+            about 50 per week. This bottleneck was causing them to miss excellent candidates and slowing down 
+            their hiring velocity significantly.
+        </p>
+
+        <div class="challenge-solution">
+            <div class="section-block">
+                <h3>
+                    <div class="section-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                    </div>
+                    The Challenge
+                </h3>
+                <ul>
+                    <li>300+ resumes per week overwhelming HR team capacity</li>
+                    <li>3-day average time to first review causing candidate drop-off</li>
+                    <li>Inconsistent evaluation criteria across reviewers</li>
+                    <li>Manual data entry into ATS systems</li>
+                    <li>Difficulty tracking candidate pipeline status</li>
+                    <li>Missing qualified candidates due to volume</li>
+                </ul>
+            </div>
+
+            <div class="section-block">
+                <h3>
+                    <div class="section-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    Our Solution
+                </h3>
+                <ul>
+                    <li>Automated resume extraction from Gmail attachments</li>
+                    <li>GPT-4 powered resume parsing and data extraction</li>
+                    <li>AI-driven candidate scoring against job requirements</li>
+                    <li>Automated Google Drive organization and archival</li>
+                    <li>Real-time Google Sheets candidate tracking dashboard</li>
+                    <li>Standardized evaluation reports with detailed justifications</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="tech-implementation">
+            <h3>Technical Implementation</h3>
+            <div class="tech-stack-list">
+                <span class="tech-tag">n8n</span>
+                <span class="tech-tag">OpenAI GPT-4</span>
+                <span class="tech-tag">LangChain</span>
+                <span class="tech-tag">Gmail API</span>
+                <span class="tech-tag">Google Drive API</span>
+                <span class="tech-tag">Google Sheets API</span>
+                <span class="tech-tag">PDF Processing</span>
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">Regex Parsing</span>
+            </div>
+
+            <div class="architecture-diagram">
+                Gmail Trigger → PDF Extraction → GPT-4 Resume Parser →<br>
+                LangChain Data Structuring → Candidate Scoring AI Agent →<br>
+                Google Drive Upload → Google Sheets Update →<br>
+                Notification System → HR Dashboard
+            </div>
+        </div>
+
+        <div class="results-grid">
+            <div class="result-card">
+                <div class="result-number">87%</div>
+                <div class="result-label">Faster Screening</div>
+            </div>
+            <div class="result-card">
+                <div class="result-number">300+</div>
+                <div class="result-label">Resumes/Week</div>
+            </div>
+            <div class="result-card">
+                <div class="result-number">40%</div>
+                <div class="result-label">Better Matches</div>
+            </div>
+            <div class="result-card">
+                <div class="result-number">2 hrs</div>
+                <div class="result-label">Processing Time</div>
+            </div>
+        </div>
+
+        <div class="testimonial-box">
+            <p class="testimonial-text">
+                "The AI recruitment system has been revolutionary for our HR department. What used to take 3 days 
+                now happens in 2 hours, and the quality of candidate matches has actually improved. We're making 
+                better hiring decisions faster than ever before."
+            </p>
+            <div class="testimonial-author">
+                <div class="author-avatar">MP</div>
+                <div class="author-info">
+                    <h4>Michael Patterson</h4>
+                    <p>HR Director, Global Dynamics</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Study 3: Client Onboarding -->
+    <section class="case-study">
+        <div class="case-header">
+            <div class="case-badge">Client Onboarding</div>
+            <h2>Intelligent Client Onboarding <span class="gradient-text">Automation System</span></h2>
+            <div class="case-meta">
+                <div class="meta-item">
+                    <div class="meta-label">Industry</div>
+                    <div class="meta-value">Professional Services</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Timeline</div>
+                    <div class="meta-value">2 Weeks</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Team Size</div>
+                    <div class="meta-value">1 Engineer</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Status</div>
+                    <div class="meta-value">Production</div>
+                </div>
+            </div>
+        </div>
+
+        <p class="case-overview">
+            A fast-growing consulting firm was onboarding 100+ new clients monthly, with each onboarding taking 
+            45 minutes of manual work. The process was inconsistent, error-prone, and preventing the team from 
+            focusing on high-value client work.
+        </p>
+
+        <div class="challenge-solution">
+            <div class="section-block">
+                <h3>
+                    <div class="section-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                    </div>
+                    The Challenge
+                </h3>
+                <ul>
+                    <li>45 minutes per client onboarding process</li>
+                    <li>100+ new clients monthly overwhelming operations team</li>
+                    <li>Generic welcome emails lacking personalization</li>
+                    <li>Manual data entry across multiple systems</li>
+                    <li>Delayed onboarding affecting client satisfaction</li>
+                    <li>Inconsistent onboarding experience quality</li>
+                </ul>
+            </div>
+
+            <div class="section-block">
+                <h3>
+                    <div class="section-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    Our Solution
+                </h3>
+                <ul>
+                    <li>Webhook-triggered automated onboarding workflow</li>
+                    <li>Dual AI agent system for personalized communications</li>
+                    <li>GPT-4 generated industry-specific welcome emails</li>
+                    <li>Automated client profile creation and structuring</li>
+                    <li>Instant Gmail delivery with branded templates</li>
+                    <li>Real-time Google Sheets tracking and analytics</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="tech-implementation">
+            <h3>Technical Implementation</h3>
+            <div class="tech-stack-list">
+                <span class="tech-tag">n8n</span>
+                <span class="tech-tag">OpenAI GPT-4</span>
+                <span class="tech-tag">LangChain</span>
+                <span class="tech-tag">Gmail API</span>
+                <span class="tech-tag">Google Sheets API</span>
+                <span class="tech-tag">Webhooks</span>
+                <span class="tech-tag">JSON Parsing</span>
+                <span class="tech-tag">Form Integration</span>
+            </div>
+
+            <div class="architecture-diagram">
+                Form Submission → Webhook Trigger → Data Validation →<br>
+                AI Agent 1 (Welcome Email) → AI Agent 2 (Client Profile) →<br>
+                Gmail Delivery → Google Sheets Sync →<br>
+                Notification System → Analytics Dashboard
+            </div>
+        </div>
+
+        <div class="results-grid">
+            <div class="result-card">
+                <div class="result-number">95%</div>
+                <div class="result-label">Time Reduction</div>
+            </div>
+            <div class="result-card">
+                <div class="result-number">2 min</div>
+                <div class="result-label">Onboarding Time</div>
+            </div>
+            <div class="result-card">
+                <div class="result-number">98%</div>
+                <div class="result-label">Satisfaction Rate</div>
+            </div>
+            <div class="result-card">
+                <div class="result-number">100+</div>
+                <div class="result-label">Clients/Month</div>
+            </div>
+        </div>
+
+        <div class="testimonial-box">
+            <p class="testimonial-text">
+                "This automation completely transformed our client onboarding. What took 45 minutes of manual work 
+                now happens automatically in 2 minutes with even better personalization. Our team can now focus 
+                on delivering value instead of administrative tasks."
+            </p>
+            <div class="testimonial-author">
+                <div class="author-avatar">EC</div>
+                <div class="author-info">
+                    <h4>Emily Chen</h4>
+                    <p>Operations Manager, CloudScale</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Ready to Build Your <span class="gradient-text">Success Story?</span></h2>
+            <p>Let's discuss how we can create a custom automation solution that delivers measurable results for your business</p>
+            <a href="contact.html" class="cta-button">Start Your Project</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content" style="max-width: 1600px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem;">
+            <div>
+                <div style="font-family: 'Archivo', sans-serif; font-size: 1.8rem; font-weight: 900; background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem;">Automate Minds</div>
+                <p style="color: var(--muted-foreground); line-height: 1.7; margin-bottom: 2rem;">
+                    AI automation agency building intelligent workflows that transform 
+                    business operations and drive exponential growth.
+                </p>
+                <div style="display: flex; gap: 1rem;">
+                    <a href="https://linkedin.com/in/prath9763" target="_blank" style="width: 40px; height: 40px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--foreground); text-decoration: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                    <a href="https://github.com/PROFESSOR5258" target="_blank" style="width: 40px; height: 40px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--foreground); text-decoration: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                        </svg>
+                    </a>
+                    <a href="mailto:yashlohar5258@gmail.com" style="width: 40px; height: 40px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--foreground); text-decoration: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                    </a>
+                    <a href="https://professor5258.github.io/PERSONAL-PORTFOLIO/" target="_blank" style="width: 40px; height: 40px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--foreground); text-decoration: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div>
+                <h4 style="font-family: 'Archivo', sans-serif; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px;">Services</h4>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 0.8rem;"><a href="automate-minds-pro.html#services" style="color: var(--muted-foreground); text-decoration: none;">Workflow Automation</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="automate-minds-pro.html#services" style="color: var(--muted-foreground); text-decoration: none;">Lead Generation</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="automate-minds-pro.html#services" style="color: var(--muted-foreground); text-decoration: none;">AI Recruitment</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="automate-minds-pro.html#services" style="color: var(--muted-foreground); text-decoration: none;">API Integration</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="font-family: 'Archivo', sans-serif; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px;">Company</h4>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 0.8rem;"><a href="about.html" style="color: var(--muted-foreground); text-decoration: none;">About Us</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="case-studies.html" style="color: var(--muted-foreground); text-decoration: none;">Case Studies</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="pricing.html" style="color: var(--muted-foreground); text-decoration: none;">Pricing</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="testimonials.html" style="color: var(--muted-foreground); text-decoration: none;">Testimonials</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="contact.html" style="color: var(--muted-foreground); text-decoration: none;">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="font-family: 'Archivo', sans-serif; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px;">Resources</h4>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 0.8rem;"><a href="https://github.com/PROFESSOR5258/PERSONAL-PORTFOLIO/blob/main/Prathmesh_Lohar_AI_Automation_Engineer_n8n.pdf" target="_blank" style="color: var(--muted-foreground); text-decoration: none;">Resume</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="https://github.com/PROFESSOR5258" target="_blank" style="color: var(--muted-foreground); text-decoration: none;">GitHub Projects</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="contact.html" style="color: var(--muted-foreground); text-decoration: none;">Support</a></li>
+                </ul>
+            </div>
+        </div>
+        <div style="max-width: 1600px; margin: 0 auto; padding-top: 2rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; color: var(--muted-foreground); font-size: 0.9rem;">
+            <div>© 2025 Automate Minds. All rights reserved.</div>
+            <div>Built by Prathmesh Lohar</div>
+        </div>
+    </footer>
+</body>
+</html>
